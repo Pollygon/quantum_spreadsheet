@@ -1,4 +1,4 @@
-##Quantum Simulator in a Google Spreadsheet
+## Quantum Simulator in a Google Spreadsheet
 ```js
 for (let i = 0; i < n; i++) {
            transform(n, i, rx(Math.PI / 2))
