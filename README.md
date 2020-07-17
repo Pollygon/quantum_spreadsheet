@@ -1,6 +1,6 @@
 ## Quantum Simulator in a Google Spreadsheet
 
-#### Binary strings with no consecutive 1s
+### Binary strings with no consecutive 1s
 
 This displays transformations with controlled gates.
 ```js
@@ -13,7 +13,7 @@ for (let i = 0; i < n; i++) {
 ```
 ![](fibonacci.png)
 
-#### Binary strings with no three consecutive 1s
+### Binary strings with no three consecutive 1s
 
 This displays transformations with multiple controlled gates.
 ```js
