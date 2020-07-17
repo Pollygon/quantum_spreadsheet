@@ -1,5 +1,23 @@
 ## Quantum Simulator in a Google Spreadsheet
 
+### Number encoding
+
+This displays the phase estimation procedure used to encode numbers.
+The example uses v = 4.75.
+```js
+const theta = v * 2 * Math.PI/2**n;
+  
+  for(let i = 0; i < n; i++){
+    transform(n, i, h)
+  }
+  
+  for(let i = 0; i < n; i++){
+    transform(n, i, phase((2**i)*theta))
+  }
+  
+  iQFT(n, [...Array(n).keys()]);
+```
+![](numberEncoding.png)
 ### Binary strings with no consecutive 1s
 
 This displays transformations with controlled gates.
