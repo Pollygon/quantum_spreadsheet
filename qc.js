@@ -16,17 +16,21 @@ function rz(t) {
     return [[0, 0], [0, 0], [0, 0], [0, 0]]
 }
 
+function phase(t) {
+  return [[1, 0], [0, 0], [0, 0], [Math.cos(t), Math.sin(t)]]
+}
+
+// Build circuit here
 function main() {
     const sheet = SpreadsheetApp.getActiveSheet();
     sheet.clear()
-    const n = 4;
+    const n = 3; // qubits
     const charts = sheet.getCharts();
     for (let i = 0; i < charts.length; i++) {
         sheet.removeChart(charts[i]);
     }
     init(n)
     barChart(n)
-    buildTribonacci(n)
 }
 
 // Initializes quantum state
@@ -72,30 +76,62 @@ function mCTransform(n, controls, target, gate) {
     }
 }
 
+function iQFT(n, qubits){
+    const l = qubits.length;
+    for(let j = 0; j < l; j++){
+      let jj = l - 1 - j;
+      transform(n, qubits[jj], h)
+      for(let k = 0; k < jj; k++) {
+        cTransform(n, qubits[jj], qubits[jj - 1 - k], phase(-Math.PI / 2 ** (k + 1)))
+        //let k = j-1-k
+        //cTransform(n, qubits[j], qubits[k], phase(-Math.PI / 2 ** (j-k)))
+    }
+  }
+}
+
+
+
 // Circuit methods (WIP)
 function buildFibonacci(n) {
+  let theta = 2*Math.asin((Math.sqrt(5)-1)/2)
     for (let i = 0; i < n; i++) {
-        transform(n, i, rx(Math.PI / 2))
+        transform(n, i, rx(theta))
     }
     for (let j = 1; j < n; j++) {
-        cTransform(n, [j - 1], j, rx(-Math.PI / 2))
+        cTransform(n, [j - 1], j, rx(-theta))
     }
 }
 
 function buildTribonacci(n) {
-    for (let i = 0; i < n; i++) {
-        transform(n, i, rx(Math.PI / 2))
+  for (let i = 0; i < n; i++) {
+      transform(n, i, rx(Math.PI / 2))
     }
-    for (let j = 2; j < n; j++) {
-        mCTransform(n, [j - 1, j - 2], j, rx(-Math.PI / 2))
-    }
+  for (let j = 2; j < n; j++) {
+    mCTransform(n, [j - 1, j - 2], j, rx(-Math.PI / 2))
+  }
 }
 
 function buildSuperposition(n) {
-    for (let num = 0; num < n; num++) {
-        transform(n, num, ry(Math.PI / 2))
+  for (let num = 0; num < n; num++) {
+      transform(n, num, ry(Math.PI / 2))
     }
 }
+
+function buildFourier(n, v){
+  const theta = v * 2 * Math.PI/2**n;
+
+  for(let i = 0; i < n; i++){
+    transform(n, i, h)
+  }
+
+  for(let i = 0; i < n; i++){
+    transform(n, i, phase((2**i)*theta))
+  }
+
+  iQFT(n, [...Array(n).keys()]);
+}
+
+
 
 //https://gist.github.com/eyecatchup/9536706 Colors
 function HSVtoRGB(h, s, v) {
