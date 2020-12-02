@@ -1,9 +1,9 @@
 ## Quantum Simulator in a Google Spreadsheet
 
-### Number encoding
+### Number encoding, Fourier transform
 
 This displays the phase estimation procedure used to encode numbers.
-The example uses v = 4.75.
+The example uses v = 2.7.
 ```js
 const theta = v * 2 * Math.PI/2**n;
   
@@ -17,7 +17,7 @@ const theta = v * 2 * Math.PI/2**n;
   
   iQFT(n, [...Array(n).keys()]);
 ```
-![](numberEncoding.png)
+![](fourier.png) (Note the distribution of probability between 2 and 3, leaning towards 3, based on the given value 2.7.)
 ### Binary strings with no consecutive 1s
 
 This displays transformations with controlled gates.
